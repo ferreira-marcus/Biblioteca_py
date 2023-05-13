@@ -7,16 +7,21 @@ class Bibliotecario:
 
     def __str__(self) -> str:
         return f"Bibliotecario {self.nome} cadastrado sob CPF de n°: {self.CPF}."
-
 #Funcional
 class Aluno:
     def __init__(self,nome,matricula):
         self.nome = nome
         self.matricula = matricula
+        self.qtd_livros_posse = 0
+        self.livro_posse = ""
+        self.periodo_devolucao = "00-00-0000"
+    
+    def Adcionar_Livro(self,nome_livro, devolucao):
+        self.livro_posse = nome_livro
+        self.periodo_devolucao = devolucao
         
-
     def __str__(self) -> str:
-        return f"Aluno {self.nome} cadastrado sob matricula de n°: {self.matricula}."
+        return f"Aluno {self.nome} cadastrado sob matricula de n°: {self.matricula}."    
     
 #Funcional
 class Livros_Cadastrados:
@@ -29,9 +34,10 @@ class Livros_Cadastrados:
     def __str__(self):
         return f"Livro: {self.nome_livro} \nAutor: {self.autor_livro} \nEditora: {self.editora}."
 
-Livros = []
 BibliotecariosCadastrados = [Bibliotecario("Marcus",514851,1234), Bibliotecario("Angelo",606702,1234)]
-AlunosCadastrados = []
+AlunosCadastrados = [Aluno("Luan",1234)]
+LivrosCadastrados = []
+LivrosAlugados = []
 
 #Funcional               
 def Cadastro_Bibliotecario():
@@ -47,10 +53,24 @@ def Cadastro_Bibliotecario():
     BibliotecariosCadastrados.append(bibliotecario)
 
 #Funcional
+def Validar_Senha(CPF):
+    for bibliotecario in BibliotecariosCadastrados:
+        if (CPF == bibliotecario.CPF):
+            for i in range(3):
+                if ( i == 0):
+                    senha = int(input("Digite a senha: "))
+                    if ( senha == bibliotecario.senha ):
+                        return True
+                else: 
+                    senha = int(input("Senha Incorreta, digite a senha novamente: "))
+                    if ( senha == bibliotecario.senha ):
+                        return True
+            return False
+    
+#Funcional
 def Imprimir_Bibliotecarios():
     for bibliotecario in BibliotecariosCadastrados:
         print(bibliotecario)
-
 
 #Funcional               
 def Cadastro_Aluno():
@@ -75,25 +95,16 @@ def Cadastro_Livro():
     CPF_encontrado = False
     
     CPF = int(input("Digite o numero do CPF do Bibliotecario: "))
-    for bibliotecario in BibliotecariosCadastrados:
-        if (CPF == bibliotecario.CPF):
-            for i in range(2):
-                senha = int(input("Digite a senha: "))
-                if ( senha == bibliotecario.senha):
-                    nome = input("Digite o nome do Livro a ser cadastrado: ")
-                    autor = input("Digite o nome do autor do livro: ")
-                    editora = input("Digite o nome da editora do livro: ")
-                    qtd_livros = int(input("Digite a quantidade de livros que possuem na biblioteca: "))
+    if ( Validar_Senha(CPF) == True ):
+        nome = input("Digite o nome do Livro a ser cadastrado: ")
+        autor = input("Digite o nome do autor do livro: ")
+        editora = input("Digite o nome da editora do livro: ")
+        qtd_livros = int(input("Digite a quantidade de livros que possuem na biblioteca: "))
 
-                    Livro = Livros_Cadastrados(nome,autor,editora,qtd_livros)
-                    Livros.append(Livro)
-                    CPF_encontrado = True
-                    break
-                elif ( i != 2 ):
-                    print("Senha Incorreta.\n----------------------")
-                    CPF_encontrado = True
-
-                    
+        Livro = Livros_Cadastrados(nome,autor,editora,qtd_livros)
+        Livros.append(Livro)
+        CPF_encontrado = True
+                          
     if (CPF_encontrado == False):
         print("CPF não Cadastrado")
 
@@ -102,9 +113,27 @@ def Imprimir_Livro():
     for livro in Livros:
         print(livro)
 
-#def Aluguel_livro():
+def Aluguel_livro():
+    CPF_encontrado = False
+    Imprimir_Livro()
+
+    CPF = int(input("Digite o numero do CPF do Bibliotecario: "))
+    
+    if ( Validar_Senha(CPF) == True):
+        nome = input("Digite o nome do Livro que deseja Alugar: ")
+        for livro in Livros:
+            if ( nome.upper() ==  )
+            qtd_livros = int(input("Digite a quantidade de livros que possuem na biblioteca: "))
+
+            Livro = Livros_Cadastrados(nome,autor,editora,qtd_livros)
+            Livros.append(Livro)
+            CPF_encontrado = True
+                        
+    if (CPF_encontrado == False):
+        print("CPF não Cadastrado")
 
 
 Imprimir_Bibliotecarios()
-Cadastro_Aluno()
-Imprimir_Alunos()
+A = AlunosCadastrados[0]
+A.Adcionar_Livro("Harry","21-03-2921")
+print(A.livro_posse)
